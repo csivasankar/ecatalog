@@ -1,0 +1,45 @@
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-04-29 15:36:01
+project --topLevelPackage org.cisco.catalog --projectName ecatalog --java 5 --packaging JAR
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-04-29 15:36:05
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-04-29 15:36:09
+persistence setup --provider HIBERNATE --database MYSQL --databaseName catalogs --userName root --password root
+// [failed] database introspect --schema catalogs
+osgi start --url file:///C:/Users/nsudhakar/.m2/repository/mysql/mysql-connector-java/5.1.18/mysql-connector-java-5.1.18.jar
+database introspect --schema catalogs
+database reverse engineer --schema catalogs --package ~.domain
+web mvc setup
+database reverse engineer --schema catalogs --package ~.domain
+database reverse engineer --schema catalogs --package ~.domain
+controller all --package ~.web
+service --entity ~.domain.Acos --interface ~.service.Acos --class ~.service.AcosImpl
+service --entity ~.domain.Acos --interface ~.service.Aros --class ~.service.ArosImpl
+service --entity ~.domain.Acos --interface ~.service.AcosService --class ~.service.AcosImpl
+service --entity ~.domain.Acos --interface ~.service.ArosService --class ~.service.ArosServiceImpl
+service --entity ~.domain.Acos --interface ~.service.CartoonsService --class ~.service.CartoonsServiceImpl
+service --entity ~.domain.Acos --interface ~.service.CategoriesService --class ~.service.CategoriesServiceImpl
+service --entity ~.domain.Acos --interface ~.service.AcosService --class ~.service.AcosServiceImpl
+service --entity ~.domain.Aros --interface ~.service.ArosService --class ~.service.ArosServiceImpl
+service --entity ~.domain.Cartoons --interface ~.service.CartoonsService --class ~.service.CartoonsServiceImpl
+service --entity ~.domain.Categories --interface ~.service.CategoriesService --class ~.service.CategoriesServiceImpl
+service --entity ~.domain.Features --interface ~.service.FeaturesService --class ~.service.FeaturesServiceImpl
+service --entity ~.domain.Images --interface ~.service.ImagesService --class ~.service.ImagesServiceImpl
+service --entity ~.domain.Products --interface ~.service.ProductsService --class ~.service.ProductsServiceImpl
+service --entity ~.domain.Promotions --interface ~.service.PromotionsService --class ~.service.PromotionsServiceImpl
+service --entity ~.domain.Tags --interface ~.service.TagsService --class ~.service.TagsServiceImpl
+service --entity ~.domain.Users --interface ~.service.UsersService --class ~.service.UsersServiceImpl
+service --entity ~.domain.Groups --interface ~.service.GroupsService --class ~.service.GroupsServiceImpl
+service --entity ~.domain.Uploads --interface ~.service.UploadsService --class ~.service.UploadsServiceImpl
+security setup
+repository jpa --entity ~.domain.Acos --interface ~.dao.AcosDao
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-04-29 20:44:23
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-04-29 21:03:33
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-04-29 22:27:05
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-05-13 12:41:08
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-05-13 13:18:31
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-05-28 16:18:25
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-05-28 16:20:19
+// Spring Roo 1.1.0.RELEASE [rev 793f2b0] log opened at 2013-06-05 23:46:34
+// Spring Roo 1.1.0.RELEASE [rev 793f2b0] log closed at 2013-06-05 23:57:18
+// Spring Roo 1.1.0.RELEASE [rev 793f2b0] log opened at 2013-06-09 14:18:03
+// Spring Roo 1.1.0.RELEASE [rev 793f2b0] log closed at 2013-06-10 04:37:53
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-06-10 13:48:24

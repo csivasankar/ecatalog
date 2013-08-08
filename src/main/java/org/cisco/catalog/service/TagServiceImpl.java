@@ -1,0 +1,79 @@
+package org.cisco.catalog.service;
+
+import java.util.List;
+
+import org.cisco.catalog.dao.TagDao;
+import org.cisco.catalog.domain.Product;
+import org.cisco.catalog.domain.Tag;
+import org.cisco.catalog.util.DateUtil;
+import org.cisco.catalog.util.Sort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+public class TagServiceImpl implements TagService {
+
+	@Autowired
+	TagDao tagDao;
+
+	@Autowired
+	ProductService productService;
+
+	@Autowired
+	ImageService imageService;
+	
+	public long countAllTags() {
+		return tagDao.count();
+	}
+
+	public void deleteTag(Tag tag) {
+		// reset associated products
+		List<Product> products = productService.findAllProductsByTag(tag);
+		for (Product p : products) {
+			p.setTag(null);
+			productService.updateProduct(p);
+		}
+		// delete tag image
+		if(tag.getImage() != null) {
+			imageService.deleteImage(tag.getImage());
+		}
+		tagDao.delete(tag);
+	}
+
+	public Tag findTag(Integer id) {
+		return tagDao.findOne(id);
+	}
+
+	public List<Tag> findAllTags() {
+		return tagDao.findAll(sortByIdAsc());
+	}
+
+	public void saveTag(Tag tag) {
+		populateModifiedDate(tag);
+		tagDao.save(tag);
+	}
+
+	public Tag updateTag(Tag tag) {
+		// update associated products
+		populateModifiedDate(tag);
+		List<Product> products = productService.findAllProductsByTag(tag);
+		for (Product p : products) {
+			productService.updateProduct(p);
+		}
+		return tagDao.update(tag);
+	}
+
+	private void populateModifiedDate(Tag tag) {
+		tag.setModified(DateUtil.getPSTDate());
+	}
+	
+	private Sort sortByIdAsc() {
+		return new Sort(Sort.Direction.ASC, "id");
+	}
+
+	public Tag findByName(String name) {
+		return tagDao.findByName(name);
+	}
+}

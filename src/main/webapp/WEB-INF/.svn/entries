@@ -1,0 +1,89 @@
+10
+
+dir
+1736
+svn://192.168.1.101/Java_Apps/ecatalog/src/main/webapp/WEB-INF
+svn://192.168.1.101
+
+
+
+2013-06-13T14:41:05.265958Z
+1732
+nsudhakar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+968841ed-e746-3748-81f3-71ea18d18804
+
+classes
+dir
+
+decorators.xml
+file
+1835
+
+
+
+
+f79c3cf6183505a35766285ced8d80a6
+2013-07-15T07:58:32.379490Z
+1801
+sivasankar
+
+
+svn:special svn:externals svn:needs-lock
+
+ftl
+dir
+
+i18n
+dir
+
+spring
+dir
+
+web.xml
+file
+1836
+
+
+
+2013-07-18T18:02:51.750000Z
+5e03bdbb2ca89a59280eff8371daaca7
+2013-07-22T09:44:28.368662Z
+1836
+sivasankar
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4092
+

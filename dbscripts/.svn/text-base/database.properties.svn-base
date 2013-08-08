@@ -1,0 +1,6 @@
+#Updated at Mon Apr 29 15:38:38 IST 2013
+#Mon Apr 29 15:38:38 IST 2013
+database.driverClassName=com.mysql.jdbc.Driver
+database.url=jdbc\:mysql\://localhost\:3306/catalogs
+database.username=root
+database.password=root

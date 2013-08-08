@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>CTG Admin Tool</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<%@ include file="../header.jsp"%>
+	<div class="container">
+		<div class="tags index">
+			<div class="row">
+				<div class="span12">
+					<h2>Tag</h2>
+				</div>
+				<div class="span10">
+					<div class="pagination">
+						<ul>
+							<span class="prev disabled">&lt; previous</span>
+							<span class="next disabled">next &gt;</span>
+						</ul>
+
+					</div>
+				</div>
+				<div class="span2">
+					<a class="btn btn btn-success pull-right addTag"
+						data-title="Add new Tag" href="#"><i class="icon-upload"></i>
+						Add</a>
+				</div>
+			</div>
+			<table class="table">
+				<tr>
+					<th><a href="/tags/index/sort:id/direction:asc">Id</a></th>
+					<th><a href="/tags/index/sort:name/direction:asc">Name</a></th>
+					<th>Add Image</th>
+					<th class="actions">Actions</th>
+				</tr>
+				<tr>
+					<td>7&nbsp;</td>
+					<td>Promotion&nbsp;</td>
+					<td><a class="btn btn btn-success add images"
+						data-title="Add Images" href="/images/add/7/Tag"> <i
+							class="icon-picture"></i> Add image
+					</a></td>
+					<td class="actions"><a href="viewTag.jsp">View</a> <a
+						href="editTag.jsp">Edit</a>
+						<form action="#" name="post_5177abf8e967c" id="post_5177abf8e967c"
+							style="display: none;" method="post">
+							<input type="hidden" name="_method" value="POST" />
+						</form> <a href="#"
+						onclick="if (confirm('Are you sure you want to delete?')) { return false; } event.returnValue = false; return false;">Delete</a>
+					</td>
+				</tr>
+
+			</table>
+			<p>Page 1 of 1, showing 3 records out of 3 total, starting on
+				record 1, ending on 3</p>
+
+		</div>
+		<div class="row">
+
+			<div class="span10">
+				<div class="pagination">
+					<ul>
+						<span class="prev disabled">&lt; previous</span>
+						<span class="next disabled">next &gt;</span>
+					</ul>
+
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	<div id="addImage" style="display: none;" class="modal in"
+		aria-hidden="false">
+		<div class="modal-header">
+			<button aria-hidden="true" data-dismiss="modal" class="close"
+				type="button">x</button>
+			<h3>Add Images</h3>
+		</div>
+		<div class="modal-body">
+
+
+			<div rel="7" id="photos" class="upload">
+				<div class="qq-uploader">
+					<div class="qq-upload-drop-area" style="display: none;">
+						<span>Drop files here to upload</span>
+					</div>
+					<div class="qq-upload-button btn btn-large btn-block btn-primary"
+						style="position: relative; overflow: hidden; direction: ltr;">
+						Upload<input type="file" multiple="multiple" name="file[]"
+							style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+					</div>
+					<hr style="margin: 10px 0">
+					<ul class="qq-upload-list unstyled"></ul>
+				</div>
+			</div>
+			<a onclick="$('ul#sortableImages&gt;li').tsort({attr:'title'});"
+				class="sort_by_name btn" href="#">sort by name</a>
+			<h2>Images</h2>
+			<ul id="sortableImages" class="thumbnails ui-sortable">
+
+				<li title="promotion_btn@2x" id="Image_257" class="span2">
+					<div class="thumbnail">
+						<a class="close" href="#">x</a> <img src="img/257_thumb.png">
+					</div>
+
+				</li>
+			</ul>
+		</div>
+	</div>
+	<%@ include file="../cakePHP.jsp"%>
+	<%@ include file="../footer.jsp"%>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<#import "/spring.ftl" as spring />
+<div rel="${imageObj.id?c}" id="photos" class="upload">
+	<div class="qq-uploader">
+		<div class="qq-upload-drop-area" style="display: none;">
+			<span>Drop files here to upload</span>
+		</div>
+		<div class="qq-upload-button btn btn-large btn-block btn-primary" style="position: relative; overflow: hidden; direction: ltr;">
+		Upload
+			<input type="file" multiple="multiple" name="file" id="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+		</div>
+		<hr style="margin:10px 0">
+		<ul class="qq-upload-list unstyled">
+		</ul>
+	</div>
+</div>
+<a onclick="$('ul#sortableImages > li').tsort({attr:'title'});" class="sort_by_name btn" href="#">sort by name</a> 
+   <h2>Images</h2>
+      <ul id="sortableImages" class="thumbnails ui-sortable">
+      	<#if isProduct??>
+      		<#list imageObj.images as img>
+      			<#if img.image??>
+	      		 <li class="span2" id="${img.image.id?c}" title="${img.image.name!}">
+	      		 	        <div class="thumbnail">
+	                            <a href="<@spring.url "/images/delete/${img.image.id?c}"/>" class="close">x</a>
+	                            <img src="<@spring.url "/resources/${img.image.thumbImagePath!}"/>"/>
+	                        </div>    
+	              </li>
+	              </#if>
+              </#list>
+          <#elseif type = 'cartoonIcon'>
+      		 <ul id="sortableImages" class="thumbnails ui-sortable">
+      		 	<#if imageObj.iconId??>
+ 	      		 <li class="span2" id="Image_${imageObj.iconId.id?c}" title="${imageObj.iconId.name!}">
+	      		 	        <div class="thumbnail">
+	                            <a href="<@spring.url  "/images/delete/${imageObj.iconId.id?c}?type=icon"/>" class="close">x</a>
+	                            <img src="<@spring.url "/resources/${imageObj.iconId.thumbImagePath!}"/>"/>
+	                        </div>    
+	              </li>
+	              </#if>
+      		</ul>
+      	  <#elseif type = 'cartoonImage'>
+      		 <ul id="sortableImages" class="thumbnails ui-sortable">
+      		 	<#if imageObj.imageId??>
+ 	      		 <li class="span2" id="Image_${imageObj.imageId.id?c}" title="${imageObj.imageId.name!}">
+	      		 	        <div class="thumbnail">
+	                            <a href="<@spring.url  "/images/delete/${imageObj.imageId.id?c}?type=image"/>" class="close">x</a>
+	                            <img src="<@spring.url "/resources/${imageObj.imageId.thumbImagePath!}"/>"/>
+	                        </div>    
+	              </li>
+	              </#if>
+      		</ul>
+          <#elseif type = 'image'>
+          	<#if imageObj.image??>
+	      		 <li class="span2" id="Image_${imageObj.image.id?c}" title="${imageObj.image.name!}">
+	      		 	        <div class="thumbnail">
+	                            <a href="<@spring.url "/images/delete/${imageObj.image.id?c}"/>" class="close">x</a>
+	                            <img src="<@spring.url "/resources/${imageObj.image.thumbImagePath!}"/>"/>
+	                        </div>    
+	              </li>
+	              </#if>
+          </#if> 
+      </ul>      
+<script type="text/javascript">
+	$(function() {
+	    var uploader = []
+	    $('.upload').each(function(i){
+			 var id = $(this).attr('rel');
+			 uploader[i] = new qq.FileUploader({
+					    element:this,
+					    action: '<@spring.url "/upload/image/${page}/${imageObj.id?c}"/>',
+					    onComplete: function(id, fileName, responseJSON){
+                            console.log(responseJSON);
+                            var deleteUrl = '<@spring.url "/images/delete/"/>';
+                            var showUrl = '<@spring.url "/resources/"/>';
+							if(responseJSON.success){
+									var img = responseJSON.image; 
+							        console.log(img);
+							        if("${page}" == "category" || "${page}" == "cartoon" || "${page}" == "icon" || "${page}" == "tag"){
+							        	$( "#sortableImages li" ).remove();
+							        }
+							        var li = $('<li id="Image_' + img.id +'" class="span2">').html(
+							                 '<div class="thumbnail">'
+							             +   '	 <a href="' + deleteUrl + img.id + '?type=${type}" class="close">x</a>'
+							             +   '   <img src="'+ showUrl + img.path + '"/>'
+							             +   '</div>'
+							             );
+							        console.log(li)     
+							        $( "#sortableImages" ).append(li);
+							        var $this = '#Image_' + img.id;  
+							        $('.close',$this).on('click',function(e){
+                                        e.preventDefault();
+                                        
+                                        $.post(this.href,{
+                                                data:{ id : 'false'}
+                                        })
+                                        $(this).parent().parent().remove();
+                                    })   
+						    }
+					    }
+					});
+		});
+		$( "#sortableImages" ).sortable({
+			placeholder: "highlight span2",
+			update : function(event, ui) {
+				$.ajax({
+				  type: "POST",
+				  url: '<@spring.url "/imagesproducts/sort" />',
+				  data: {"sortedData": $("#sortableImages").sortable('toArray').toString()}
+				});
+			}
+		});
+	    $('.close','.thumbnail').on('click',function(e){
+	        e.preventDefault();
+	        $.post(this.href,{
+                    data:{ id : 'false'}
+            })
+            $(this).parent().parent().remove();
+	    })
+	});
+</script>

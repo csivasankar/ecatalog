@@ -1,0 +1,52 @@
+<#import "/spring.ftl" as spring />
+<#setting date_format="MM-dd-yyyy HH:mm:ss">
+<html>
+<head>
+<title>Users</title>
+</head>
+<body>
+		<div class="users index">
+			<div class="row">
+			<div class="span6"><h2>Users</h2></div><div class="span4 pull-right" id="pagination_div"></div>
+				<div class="span2"></br>
+					<a class="btn btn-success pull-right ajaxModal" data-title="Add new User" href="<@spring.url "/users/add"/>" data-title="Add New User">
+					<i class="icon-upload"></i> Add</a>
+				</div>
+			</div>
+			<table class="table table-striped table-hover" id="pagination">
+				<thead>
+				<tr>
+					<th>Id</th>
+					<th>Username</th>
+					<th>Group</th>
+					<th>Created</th>
+					<!-- <th>Modified</th> -->
+					<th class="actions">Actions</th>
+				</tr>
+				</thead>
+				<tbody>
+				<#if userList??>
+				<#list userList as user>
+				<#if user??>
+				<tr>
+					<td>${user.id?c!}</td>
+					<td>${user.username!}</td>
+					<td>${user.group.name!}</td>
+					<td><#if user.created??>${user.created.time?date}</#if></td>
+					<!-- <td><#if user.modified??>${user.modified.time?date}</#if></td> -->
+					<td class="actions">
+						<form method="post" id="user_${user.id?c}" name="user_${user.id?c}" style="display:none;" action="<@spring.url "/users/${user.id?c}"/>">
+						<input type="hidden" value="DELETE" name="_method">
+						</form>
+						<a href="#" onclick="if(confirm('Are you sure you want to delete ${user.username?html}?')){document.user_${user.id?c!}.submit();} event.returnValue = false; return false;" class="btn btn-danger">
+						<i class="icon-remove-circle icon-white"></i> Delete</a>
+				</tr>
+				</#if>
+				</#list>
+				</#if>
+				</tbody>
+			</table>
+		</div>
+	<#include "../pagination.ftl"/>	
+</body>
+</html>

@@ -1,0 +1,20 @@
+package org.cisco.catalog.domain;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.codehaus.jackson.annotate.JsonProperty;
+
+public class PromotionsDto extends BaseDto {
+
+	@JsonProperty("Promotions")
+	private List<Promotion> promotions = new ArrayList<Promotion>();
+
+	public List<Promotion> getPromotions() {
+		return promotions;
+	}
+
+	public void setPromotions(List<Promotion> promotions) {
+		this.promotions = promotions;
+	}
+}

@@ -1,0 +1,71 @@
+package org.cisco.catalog.service;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
+import java.util.List;
+import org.cisco.catalog.dao.UserDao;
+import org.cisco.catalog.domain.User;
+import org.cisco.catalog.util.PasswordEncoder;
+import org.cisco.catalog.util.UserUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+public class UserServiceImpl implements UserService {
+
+	@Autowired
+	UserDao userDao;
+
+	@Autowired
+	UserUtil userUtil;
+	
+	public long countAllUsers() {
+		return userDao.count();
+	}
+
+	public User findByUsername(String username) {
+		return userDao.findByUsername(username);
+	}
+
+	public void deleteUser(User user) {
+		userUtil.deleteUser(user.getUsername());
+		userDao.delete(user);
+	}
+
+	public User findUser(Integer id) {
+		return userDao.findOne(id);
+	}
+
+	public List<User> findAllUsers() {
+		return userDao.findAll();
+	}
+
+	public void saveUser(User user) {
+		encodePassword(user);
+		populateModifiedDate(user);
+		userDao.save(user);
+	}
+
+	public User updateUser(User user) {
+		encodePassword(user);
+		populateModifiedDate(user);
+		return userDao.update(user);
+	}
+
+	private void populateModifiedDate(User user) {
+		user.setModified(Calendar.getInstance());
+	}
+
+	private void encodePassword(User user) {
+		try {
+			user.setPassword(PasswordEncoder.encodePassword(user.getPassword()));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
+}

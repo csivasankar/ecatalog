@@ -1,0 +1,93 @@
+package org.cisco.catalog.filter;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.cisco.catalog.util.StringUtil;
+import org.cisco.catalog.util.UserUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.http.HttpStatus;
+
+/**
+ * AuthenticationFilter - Validates user based on RequestHeader "AUTH_USER"
+ */
+@Configurable
+public class AuthenticationFilter implements Filter {
+
+	protected static final Logger log = LoggerFactory.getLogger(AuthenticationFilter.class);
+	private static final String AUTH_USER = "AUTH_USER";
+
+	@Autowired
+	UserUtil userUtil;
+
+	/**
+	 * Default constructor.
+	 */
+	public AuthenticationFilter() {
+
+	}
+
+	/**
+	 * @see Filter#destroy()
+	 */
+	public void destroy() {
+
+	}
+
+	/**
+	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+	 */
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) throws IOException, ServletException {
+		if (isValidUser((HttpServletRequest) request)) {
+			chain.doFilter(request, response);
+		} else {
+			HttpServletResponse res = (HttpServletResponse) response;
+			res.setStatus(HttpStatus.UNAUTHORIZED.value());
+			res.getOutputStream().write("<h3>401 - You are not Authorized to access this Application</h3>".getBytes());
+		}
+	}
+
+	private boolean isValidUser(HttpServletRequest request) {
+		/*String path = request.getRequestURI();
+		String qs = StringUtil.get(request.getQueryString()).isEmpty() ? "" : "?" + request.getQueryString();
+		if (log.isDebugEnabled()) {
+			log.debug(" path : " + path + qs);
+		}
+		if (path.contains("json") || path.contains("/img/") || path.contains("/files/")) {
+			if (log.isDebugEnabled()) {
+				log.debug(" Skipping Auth for - " + path + qs);
+			}
+			return true;
+		}
+		String authUser = "admin"; //request.getHeader(AUTH_USER);
+		if (log.isDebugEnabled()) {
+			log.debug(AUTH_USER + " : " + authUser);
+		}
+		if (!StringUtil.isEmptyTrim(authUser)) {
+			// validate user
+			return userUtil.isValidUser(authUser);
+		}
+		return false;*/
+		return true;
+	}
+
+	/**
+	 * @see Filter#init(FilterConfig)
+	 */
+	public void init(FilterConfig fConfig) throws ServletException {
+
+	}
+
+}

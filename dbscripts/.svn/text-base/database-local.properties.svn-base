@@ -1,0 +1,11 @@
+#Updated at Mon Apr 29 15:38:38 IST 2013
+#Mon Apr 29 15:38:38 IST 2013
+database.driverClassName=com.mysql.jdbc.Driver
+database.url=jdbc\:mysql\://localhost\:3306/cccapp_catalogs
+database.username=root
+database.password=root
+
+#database.driverClassName=oracle.jdbc.OracleDriver
+#database.url=jdbc\:oracle\:thin\:@192.168.3.99\:1521\:XE
+#database.username=ecatalogs
+#database.password=ecatalogs

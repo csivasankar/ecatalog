@@ -1,0 +1,21 @@
+body {
+    background:#354f88;
+}
+
+
+.container {
+    margin-top:0;
+    padding-top:0;
+}
+
+.well {
+background:#273654;
+color:#fff;
+border: 1px solid #212D45;
+}
+
+h2 {
+    background: url("../img/ciscologo.png") no-repeat scroll 0 0 #354F88;
+    color: #FFFFFF;
+    padding: 6px 0 10px 100px;
+}
